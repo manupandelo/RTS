@@ -8,7 +8,10 @@ import Loadable from '../ui-component/Loadable';
 const DashboardDefault = Loadable(lazy(() => import('../views/dashboard/Default/index')));
 
 // utilities routing
-const DataGrid = Loadable(lazy(() => import('../views/utilities/Tablas')));
+const Sistema= Loadable(lazy(() => import('../views/utilities/Sistema')));
+const Subsistema = Loadable(lazy(() => import('../views/utilities/Subsistema')));
+const Tag = Loadable(lazy(() => import('../views/utilities/Tag')));
+const Tarea = Loadable(lazy(() => import('../views/utilities/Tarea')));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('../views/sample-page/index')));
@@ -34,19 +37,19 @@ const MainRoutes = {
         },
         {
             path: 'sistema',
-            element: <DataGrid />
+            element: <Sistema />
         },
         {
             path: 'subsistema',
-            element: <DataGrid />
+            element: <Subsistema />
         },
         {
             path: 'tag',
-            element: <DataGrid />
+            element: <Tag />
         },
         {
             path: 'tarea',
-            element: <DataGrid />
+            element: <Tarea />
         },
         {
             path: 'sample-page',
