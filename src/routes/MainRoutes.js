@@ -12,9 +12,10 @@ const Sistema= Loadable(lazy(() => import('../views/utilities/Sistema')));
 const Subsistema = Loadable(lazy(() => import('../views/utilities/Subsistema')));
 const Tag = Loadable(lazy(() => import('../views/utilities/Tag')));
 const Tarea = Loadable(lazy(() => import('../views/utilities/Tarea')));
+const Registro = Loadable(lazy(() => import('../views/utilities/Registro')));
+const Agregar = Loadable(lazy(() => import('../views/utilities/Agregar')));
 
-// sample page routing
-const SamplePage = Loadable(lazy(() => import('../views/sample-page/index')));
+
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -52,8 +53,12 @@ const MainRoutes = {
             element: <Tarea />
         },
         {
-            path: 'sample-page',
-            element: <SamplePage />
+            path: 'registro',
+            element: <Registro />
+        },
+        {
+            path: 'agregar',
+            element: <Agregar />
         }
     ]
 };

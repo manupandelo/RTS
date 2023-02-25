@@ -10,7 +10,6 @@ import MainCard from '../../../ui-component/cards/MainCard';
 import SkeletonEarningCard from '../../../ui-component/cards/Skeleton/EarningCard';
 
 // assets
-import EarningIcon from '../../../assets/images/icons/earning.svg';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import GetAppTwoToneIcon from '@mui/icons-material/GetAppOutlined';
@@ -80,17 +79,6 @@ const EarningCard = ({ isLoading }) => {
                             <Grid item>
                                 <Grid container justifyContent="space-between">
                                     <Grid item>
-                                        <Avatar
-                                            variant="rounded"
-                                            sx={{
-                                                ...theme.typography.commonAvatar,
-                                                ...theme.typography.largeAvatar,
-                                                backgroundColor: theme.palette.secondary[800],
-                                                mt: 1
-                                            }}
-                                        >
-                                            <img src={EarningIcon} alt="Notification" />
-                                        </Avatar>
                                     </Grid>
                                     <Grid item>
                                         <Avatar

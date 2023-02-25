@@ -1,5 +1,7 @@
+import React from 'react';
 import { useState, useEffect } from "react";
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
+import { grey } from '@mui/material/colors';
 import axios from 'axios';
 
 export default function Sistema() {
@@ -10,24 +12,28 @@ export default function Sistema() {
     {field: 'idsistema', headerName: 'Sistema', width: 200}
   ]
 
+  const getRowSpacing = React.useCallback((params) => {
+    return {
+      top: params.isFirstVisible ? 0 : 5,
+      bottom: params.isLastVisible ? 0 : 5,
+    };
+  }, []);
+
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getData();
   }, []);
 
   const getData = async () => {
+    setLoading(true)
     const response = await axios.get('http://localhost:5000/sistema')
-    console.log(response.data);
+    setLoading(false)
     setData(response.data);
   };
 
-  if (data.length === 0) {
-    return <div>Loading...</div>
-  }
-  else{
     return(
-      < DataGrid columns={columns} components={{ Toolbar: GridToolbar }} rows={data} />
+      < DataGrid columns={columns} loading={loading} components={{ Toolbar: GridToolbar }} rows={data} getRowSpacing={getRowSpacing} sx={{[`& .${gridClasses.row}`]: {bgcolor: (theme) => theme.palette.mode === 'light' ? grey[200] : grey[900]}}}/>
     )
-  }
 }

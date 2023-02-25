@@ -1,18 +1,20 @@
 // assets
-import { IconBookmark, IconListDetails, IconSubtask  } from '@tabler/icons';
+import { IconBookmark, IconListDetails, IconSubtask, IconCheckupList, IconDatabase } from '@tabler/icons';
 
 // constant
 const icons = {
     IconBookmark,
     IconListDetails,
-    IconSubtask
+    IconSubtask,
+    IconCheckupList,
+    IconDatabase
 };
 
 // ==============================|| UTILITIES MENU ITEMS ||============================== //
 
-const utilities = {
-    id: 'utilities',
-    title: 'Utilities',
+const centrocontrol = {
+    id: 'centrocontrol',
+    title: 'Centro de Control',
     type: 'group',
     children: [
         {
@@ -20,7 +22,7 @@ const utilities = {
             title: 'Sistema',
             type: 'item',
             url: '/sistema',
-            icon: icons.System,
+            icon: icons.IconDatabase,
             breadcrumbs: false
         },
         {
@@ -46,8 +48,16 @@ const utilities = {
             icon: icons.IconListDetails,
             url: '/tarea',
             breadcrumbs: false
+        },
+        {
+            id: 'registro',
+            title: 'Registro',
+            type: 'item',
+            icon: icons.IconCheckupList,
+            url: '/registro',
+            breadcrumbs: false
         }
     ]
 };
 
-export default utilities;
+export default centrocontrol;

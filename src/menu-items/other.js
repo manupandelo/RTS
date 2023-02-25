@@ -1,32 +1,23 @@
 // assets
-import { IconBrandChrome, IconHelp } from '@tabler/icons';
+import { IconPlus } from '@tabler/icons';
 
 // constant
-const icons = { IconBrandChrome, IconHelp };
+const icons = { IconPlus };
 
 // ==============================|| SAMPLE PAGE & DOCUMENTATION MENU ITEMS ||============================== //
 
 const other = {
-    id: 'sample-docs-roadmap',
+    id: 'other',
     type: 'group',
     children: [
         {
-            id: 'sample-page',
-            title: 'Sample Page',
+            id: 'agregar',
+            title: 'Agregar',
             type: 'item',
-            url: '/sample-page',
-            icon: icons.IconBrandChrome,
+            url: '/agregar',
+            icon: icons.IconPlus,
             breadcrumbs: false
         },
-        {
-            id: 'documentation',
-            title: 'Documentation',
-            type: 'item',
-            url: '/#',
-            icon: icons.IconHelp,
-            external: true,
-            target: true
-        }
     ]
 };
 

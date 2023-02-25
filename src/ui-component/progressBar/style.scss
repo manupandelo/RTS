@@ -1,0 +1,34 @@
+.progressbar-container {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    .progressbar-complete {
+      position: absolute;
+      left: 0;
+      top: 0px;
+      height: 100%;
+      background-color: #008f39;
+      border-radius: 10px;
+      z-index: 2;
+      .progressbar-liquid {
+        z-index: 1;
+        width: 70px;
+        height: 70px;
+        position: absolute;
+        right: -5px;
+        top: -10px;
+        background-color: #008f39;
+        border-radius: 40%;
+      }
+    }
+    .progress {
+      z-index: 2;
+      color: #000;
+    }
+  }

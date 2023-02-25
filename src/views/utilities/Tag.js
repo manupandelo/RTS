@@ -1,33 +1,59 @@
+import React from 'react';
 import { useState, useEffect } from "react";
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
 import axios from 'axios';
+import '../../ui-component/progressBar/style.scss';
+import { grey } from "@mui/material/colors";
+
+
+const ProgressBar = (props) => {
+  return( 
+      <div className="progressbar-container">
+          <div className="progressbar-complete" style={{width: `${props.props.filledQuantity}%`}}>
+              <div className="progressbar-liquid"></div>
+          </div>
+          <div className="progress">{props.props.filledQuantity}%</div>
+      </div>
+  )
+}
 
 export default function Tag() {
   const columns = [
-    {field: 'id', hide: true},
-    {field: 'nombre', headerName: 'Nombre', width: 200},
-    {field: 'proyecto', headerName: 'Proyecto', width: 200},
-    {field: 'idsistema', headerName: 'Sistema', width: 200}
+    {field: 'id', headerName:'Id', hide: true},
+    {field: 'tag', headerName: 'Tag', width: 250},
+    {field: 'nombre', headerName: 'Nombre', width: 250},
+    {field: "filledQuantity", headerName: "Realizado", width: 150, renderCell: (params) => { return <ProgressBar props={params.row} /> } },
+    {field: 'subsistema', headerName: 'Subsistema', width: 250},
+    {field: 'plano', headerName: 'P&id/Plano', width: 120},
+    {field: 'especialidad', headerName: 'Especialidad', width: 120},
+    {field: 'tipo', headerName: 'Tipo', width: 150},
+    {field: 'observaciones', headerName: 'Observaciones', width: 150},
+    /*{field: 'tareas', headerName: 'Tareas', width: 150, renderCell: (params) => { return  }}, agregar boton que ponga un modal que muestre las tareas pertenecientes al tag*/
   ]
 
+  const getRowSpacing = React.useCallback((params) => {
+    return {
+      top: params.isFirstVisible ? 0 : 5,
+      bottom: params.isLastVisible ? 0 : 5,
+    };
+  }, []);
+
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getData();
   }, []);
 
   const getData = async () => {
+    setLoading(true)
     const response = await axios.get('http://localhost:5000/tag')
-    console.log(response.data);
+    setLoading(false)
     setData(response.data);
   };
 
-  if (data.length === 0) {
-    return <div>Loading...</div>
-  }
-  else{
     return(
-      < DataGrid columns={columns} components={{ Toolbar: GridToolbar }} rows={data} />
+      < DataGrid columns={columns} loading={loading} components={{ Toolbar: GridToolbar }} rows={data} getRowSpacing={getRowSpacing} sx={{[`& .${gridClasses.row}`]: {bgcolor: (theme) => theme.palette.mode === 'light' ? grey[200] : grey[900]}}}/>
     )
-  }
 }
+
