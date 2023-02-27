@@ -13,7 +13,13 @@ const Subsistema = Loadable(lazy(() => import('../views/utilities/Subsistema')))
 const Tag = Loadable(lazy(() => import('../views/utilities/Tag')));
 const Tarea = Loadable(lazy(() => import('../views/utilities/Tarea')));
 const Registro = Loadable(lazy(() => import('../views/utilities/Registro')));
-const Agregar = Loadable(lazy(() => import('../views/utilities/Agregar')));
+const AgregarProyecto = Loadable(lazy(() => import('../views/other/AgregarProyecto')));
+const AgregarSistema = Loadable(lazy(() => import('../views/other/AgregarSistema')));
+const AgregarSubsistema = Loadable(lazy(() => import('../views/other/AgregarSubsistema')));
+const AgregarTag = Loadable(lazy(() => import('../views/other/AgregarTag')));
+const AgregarTarea = Loadable(lazy(() => import('../views/other/AgregarTarea')));
+const AgregarEspecialidad = Loadable(lazy(() => import('../views/other/AgregarEspecialidad')));
+const AgregarTipo = Loadable(lazy(() => import('../views/other/AgregarTipo')));
 
 
 
@@ -57,8 +63,32 @@ const MainRoutes = {
             element: <Registro />
         },
         {
-            path: 'agregar',
-            element: <Agregar />
+            path: 'agregarproyecto',
+            element: <AgregarProyecto />
+        },  
+        {
+            path: 'agregarsistema',
+            element: <AgregarSistema />
+        },
+        {
+            path: 'agregarsubsistema',
+            element: <AgregarSubsistema />
+        },
+        {
+            path: 'agregartag',
+            element: <AgregarTag />
+        },
+        {
+            path: 'agregartarea',
+            element: <AgregarTarea />
+        },
+        {
+            path: 'agregarespecialidad',
+            element: <AgregarEspecialidad />
+        },
+        {
+            path: 'agregartipo',
+            element: <AgregarTipo />
         }
     ]
 };

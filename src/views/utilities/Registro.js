@@ -10,7 +10,7 @@ export default function Registro() {
       {field: 'tag', headerName: 'Tag', width: 400},
       {field: 'nombretag', headerName: 'Nombre Tag', width: 400}, 
       {field: 'tarea', headerName: 'Tarea', width: 200},
-      {field: 'realizado', headerName: 'Realizado', type:'boolean', width: 200}
+      {field: 'realizado', headerName: 'Realizado', type:'boolean', width: 200, editable:'true'}
     ]
     
     const getRowSpacing = React.useCallback((params) => {

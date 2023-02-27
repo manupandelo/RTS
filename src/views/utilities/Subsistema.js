@@ -32,7 +32,6 @@ export default function Subsistema() {
   const getData = async () => {
     setLoading(true)
     const response = await axios.get('http://localhost:5000/subsistema')
-    console.log(response.data)
     setLoading(false)
     setData(response.data);
   };
