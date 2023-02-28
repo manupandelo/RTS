@@ -104,32 +104,44 @@ export default function AgregarSistema() {
             <Agregado />
             <Error />
             <h1>Agregar Proyecto</h1> <br></br>
-            <TextField
-                value={nombre}
-                id="outlined-basic"
-                label="Nombre"
-                variant="outlined"
-                onChange={(e) => setNombre(e.target.value)}
-            />
-            <TextField
-                value={numero}
-                id="outlined-basic"
-                label="Numero"
-                variant="outlined"
-                onChange={(e) => setNumero(e.target.value)}
-            />
-            <Autocomplete
-                options={options}
-                getOptionLabel={(option) => option.nombre}
-                onChange={(event, newValue) => {
-                    setProyecto(newValue.idproyecto);
-                }}
-                style={{ width: 300 }}
-                renderInput={(params) => (
-                <TextField {...params} label="Proyecto" variant="outlined" />
-                )}
-            />
-            <Button variant="contained" onClick={handleAgregar}>Agregar</Button>
+            
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <TextField
+                    value={nombre}
+                    id="outlined-basic"
+                    label="Nombre"
+                    variant="outlined"
+                    onChange={(e) => setNombre(e.target.value)}
+                />
+            </div><br/>
+            
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <TextField
+                    value={numero}
+                    id="outlined-basic"
+                    label="Numero"
+                    variant="outlined"
+                    onChange={(e) => setNumero(e.target.value)}
+                />
+            </div><br/>
+
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <Autocomplete
+                    options={options}
+                    getOptionLabel={(option) => option.nombre}
+                    onChange={(event, newValue) => {
+                        setProyecto(newValue.idproyecto);
+                    }}
+                    style={{ width: 300 }}
+                    renderInput={(params) => (
+                    <TextField {...params} label="Proyecto" variant="outlined" />
+                    )}
+                />
+            </div><br/>
+
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <Button variant="contained" onClick={handleAgregar}>Agregar</Button>
+            </div>
         </Box>
     );
 }

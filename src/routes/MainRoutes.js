@@ -4,9 +4,6 @@ import { lazy } from 'react';
 import MainLayout from '../layout/MainLayout/index';
 import Loadable from '../ui-component/Loadable';
 
-// dashboard routing
-const DashboardDefault = Loadable(lazy(() => import('../views/dashboard/Default/index')));
-
 // utilities routing
 const Sistema= Loadable(lazy(() => import('../views/utilities/Sistema')));
 const Subsistema = Loadable(lazy(() => import('../views/utilities/Subsistema')));
@@ -20,6 +17,7 @@ const AgregarTag = Loadable(lazy(() => import('../views/other/AgregarTag')));
 const AgregarTarea = Loadable(lazy(() => import('../views/other/AgregarTarea')));
 const AgregarEspecialidad = Loadable(lazy(() => import('../views/other/AgregarEspecialidad')));
 const AgregarTipo = Loadable(lazy(() => import('../views/other/AgregarTipo')));
+const Home = Loadable(lazy(() => import('../views/other/Home')));
 
 
 
@@ -31,16 +29,7 @@ const MainRoutes = {
     children: [
         {
             path: '/',
-            element: <DashboardDefault />
-        },
-        {
-            path: 'dashboard',
-            children: [
-                {
-                    path: 'default',
-                    element: <DashboardDefault />
-                }
-            ]
+            element: <Home />
         },
         {
             path: 'sistema',
@@ -63,31 +52,31 @@ const MainRoutes = {
             element: <Registro />
         },
         {
-            path: 'agregarproyecto',
+            path: 'agregar/proyecto',
             element: <AgregarProyecto />
         },  
         {
-            path: 'agregarsistema',
+            path: 'agregar/sistema',
             element: <AgregarSistema />
         },
         {
-            path: 'agregarsubsistema',
+            path: 'agregar/subsistema',
             element: <AgregarSubsistema />
         },
         {
-            path: 'agregartag',
+            path: 'agregar/tag',
             element: <AgregarTag />
         },
         {
-            path: 'agregartarea',
+            path: 'agregar/tarea',
             element: <AgregarTarea />
         },
         {
-            path: 'agregarespecialidad',
+            path: 'agregar/especialidad',
             element: <AgregarEspecialidad />
         },
         {
-            path: 'agregartipo',
+            path: 'agregar/tipo',
             element: <AgregarTipo />
         }
     ]

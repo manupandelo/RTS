@@ -161,70 +161,101 @@ export default function AgregarSistema() {
         >
             <Agregado />
             <Error />
-            <h1>Agregar Tarea</h1> <br></br>
-            <TextField
+            <h1>Agregar Tarea</h1> <br />
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+              <TextField
                 value={nombre}
                 id="outlined-basic"
                 label="Nombre"
                 variant="outlined"
                 onChange={(e) => setNombre(e.target.value)}
-            />
-            <TextField
-                value={tag}
-                id="outlined-basic"
-                label="Tag"
-                variant="outlined"
-                onChange={(e) => setTag(e.target.value)}
-            />
-            <TextField
-                value={plano}
-                id="outlined-basic"
-                label="Plano"
-                variant="outlined"
-                onChange={(e) => setPlano(e.target.value)}
-            />
-            <TextField
-                value={descripcion}
-                id="outlined-basic"
-                label="Descripcion"
-                variant="outlined"
-                onChange={(e) => setDescripcion(e.target.value)}
-            />
-            <Autocomplete
-                options={options}
-                getOptionLabel={(option) => option.nombre}
-                onChange={(event, newValue) => {
-                    setTipo(newValue.idtipo);
-                    console.log(newValue.idtipo)
-                }}
-                style={{ width: 300 }}
-                renderInput={(params) => (
-                <TextField {...params} label="Tipo" variant="outlined" />
-                )}
-            />
-            <Autocomplete
-                options={options1}
-                getOptionLabel={(option) => option.nombre}
-                onChange={(event, newValue) => {
-                    setEspecialidad(newValue.idespecialidad);
-                }}
-                style={{ width: 300 }}
-                renderInput={(params) => (
-                <TextField {...params} label="Especialidad" variant="outlined" />
-                )}
-            />
-            <Autocomplete
-                options={options2}
-                getOptionLabel={(option) => option.nombre}
-                onChange={(event, newValue) => {
-                    setSubsistema(newValue.id);
-                }}
-                style={{ width: 300 }}
-                renderInput={(params) => (
-                <TextField {...params} label="Subsistema" variant="outlined" />
-                )}
-            />
-            <Button variant="contained" onClick={handleAgregar}>Agregar</Button>
+                />  
+            </div>
+            <br />
+
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <TextField
+                    value={tag}
+                    id="outlined-basic"
+                    label="Tag"
+                    variant="outlined"
+                    onChange={(e) => setTag(e.target.value)}
+                />
+            </div>
+            <br />
+
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <TextField
+                    value={plano}
+                    id="outlined-basic"
+                    label="Plano"
+                    variant="outlined"
+                    onChange={(e) => setPlano(e.target.value)}
+                />
+            </div>
+            <br />
+
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <TextField
+                    value={descripcion}
+                    id="outlined-basic"
+                    label="Descripcion"
+                    variant="outlined"
+                    onChange={(e) => setDescripcion(e.target.value)}
+                />
+            </div>
+            <br />
+
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <Autocomplete
+                    options={options}
+                    getOptionLabel={(option) => option.nombre}
+                    onChange={(event, newValue) => {
+                        setTipo(newValue.idtipo);
+                        console.log(newValue.idtipo)
+                    }}
+                    style={{ width: 300 }}
+                    renderInput={(params) => (
+                    <TextField {...params} label="Tipo" variant="outlined" />
+                    )}
+                
+                />
+            </div>
+            <br />
+
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <Autocomplete
+                    options={options1}
+                    getOptionLabel={(option) => option.nombre}
+                    onChange={(event, newValue) => {
+                        setEspecialidad(newValue.idespecialidad);
+                    }}
+                    style={{ width: 300 }}
+                    renderInput={(params) => (
+                    <TextField {...params} label="Especialidad" variant="outlined" />
+                    )}
+                />
+            </div>
+            <br />
+
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <Autocomplete
+                    options={options2}
+                    getOptionLabel={(option) => option.nombre}
+                    onChange={(event, newValue) => {
+                        setSubsistema(newValue.id);
+                    }}
+                    style={{ width: 300 }}
+                    renderInput={(params) => (
+                    <TextField {...params} label="Subsistema" variant="outlined" />
+                    )}
+                />
+            </div>
+            <br />
+
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <Button variant="contained" onClick={handleAgregar}>Agregar</Button>
+            </div>
         </Box>
     );
 }

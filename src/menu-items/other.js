@@ -19,51 +19,51 @@ const other = {
             children: [
                 {
                     id: 'agregarProyecto',
-                    title: 'Agregar Proyecto',
+                    title: 'Proyecto',
                     type: 'item',
-                    url: '/agregarproyecto',
+                    url: '/agregar/proyecto',
                     breadcrumbs: false
                 },
                 {
                     id: 'agregarsistema',
-                    title: 'Agregar Sistema',
+                    title: 'Sistema',
                     type: 'item',
-                    url: '/agregarsistema',
+                    url: '/agregar/sistema',
                     breadcrumbs: false
                 },
                 {
                     id: 'agregarsubsistema',
-                    title: 'Agregar SubSistema',
+                    title: 'SubSistema',
                     type: 'item',
-                    url: '/agregarsubsistema',
+                    url: '/agregar/subsistema',
                     breadcrumbs: false
                 },
                 {
                     id: 'agregartag',
-                    title: 'Agregar Tag',
+                    title: 'Tag',
                     type: 'item',
-                    url: '/agregartag',
+                    url: '/agregar/tag',
                     breadcrumbs: false
                 },
                 {
                     id: 'agregartarea',
-                    title: 'Agregar Tarea',
+                    title: 'Tarea',
                     type: 'item',
-                    url: '/agregartarea',
+                    url: '/agregar/tarea',
                     breadcrumbs: false
                 },
                 {
                     id: 'agregarespecialidad',
-                    title: 'Agregar Especialidad',
+                    title: 'Especialidad',
                     type: 'item',
-                    url: '/agregarespecialidad',
+                    url: '/agregar/especialidad',
                     breadcrumbs: false
                 },
                 {
                     id: 'agregartipo',
-                    title: 'Agregar Tipo',
+                    title: 'Tipo',
                     type: 'item',
-                    url: '/agregartipo',
+                    url: '/agregar/tipo',
                     breadcrumbs: false
                 }
             ]

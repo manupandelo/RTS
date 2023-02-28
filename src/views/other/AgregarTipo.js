@@ -82,13 +82,19 @@ export default function AgregarTipo() {
             <Agregado />
             <Error />
             <h1>Agregar Tipo</h1> <br></br>
-            <TextField
-                id="outlined-basic"
-                label="Nombre"
-                variant="outlined"
-                onChange={(e) => setNombre(e.target.value)}
-            />
-            <Button variant="contained" onClick={handleAgregar}>Agregar</Button>
+
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <TextField
+                    id="outlined-basic"
+                    label="Nombre"
+                    variant="outlined"
+                    onChange={(e) => setNombre(e.target.value)}
+                />
+            </div><br />
+
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <Button variant="contained" onClick={handleAgregar}>Agregar</Button>
+            </div>
         </Box>
     );
 }

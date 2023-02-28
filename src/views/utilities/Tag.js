@@ -43,7 +43,7 @@ function ModalTareas(props) {
       </Button>
       <Dialog onClose={handleClose} open={open}>
         <DialogTitle>Tareas</DialogTitle>
-          <DialogContent style={{height:'400px'}}>
+          <DialogContent style={{height:'400px', width:'500px'}}>
             <DataGrid columns={columns} rows={props.props} />
           </DialogContent>  
           <DialogActions>
