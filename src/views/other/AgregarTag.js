@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import { Button, TextField, Alert, IconButton, Box, Autocomplete } from "@mui/material";
 import { Close } from '@mui/icons-material';
+import { useContextState } from "../../Context";
 
 export default function AgregarSistema() {
     const [nombre, setNombre] = useState("");
@@ -21,47 +22,49 @@ export default function AgregarSistema() {
     const [error, setError] = useState(false);
     const [mensaje, setMensaje] = useState("");
     const [agregado, setAgregado] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const {contextState} = useContextState();
 
     useEffect(() => {
         get();
-
     }, []);
 
     const get = async () => {
-        const response = await axios.get('http://localhost:5000/tipo')
-        if(response && response.data) {
+        try{
+            await axios.get('http://localhost:5000/tipo',  {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
             setOptions(response.data)
-        }else {
-            console.log('Error')
-            setMensaje("Error al obtener los tipos")
+        }
+        catch (error) {
             setError(true)
+            setMensaje("Error al obtener los tipos, favor de recargar la pagina")
         }
 
-        const response1 = await axios.get('http://localhost:5000/especialidad')
-        if(response1 && response1.data) {
-            setOptions1(response1.data)  
-        }else {
-            console.log('Error')
-            setMensaje("Error al obtener las especialidades")
+        try{
+            await axios.get('http://localhost:5000/especialidad',  {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+            setOptions1(response.data)
+        }
+        catch (error) {
             setError(true)
+            setMensaje("Error al obtener las especialidades, favor de recargar la pagina")
         }
 
-        const response2 = await axios.get('http://localhost:5000/subsistema')
-        if(response2 && response2.data) {
-            setOptions2(response2.data)
-        }else {
-            console.log('Error')
-            setMensaje("Error al obtener los subsistemas")
+        try{
+            await axios.get('http://localhost:5000/subsistema',  {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+            setOptions2(response.data)
+        }
+        catch (error) {
             setError(true)
+            setMensaje("Error al obtener los subsistemas, favor de recargar la pagina")
         }
 
-        const tareas = await axios.get('http://localhost:5000/tarea')
-        if(tareas && tareas.data) {
-            setTareas(tareas.data)
-        }else {
-            console.log('Error')
-            setMensaje("Error al obtener las tareas")
+        try{
+            await axios.get('http://localhost:5000/tarea',  {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+            setTareas(response.data)
+        }
+        catch (error) {
             setError(true)
+            setMensaje("Error al obtener las tareas, favor de recargar la pagina")
         }
     }
 
@@ -105,11 +108,19 @@ export default function AgregarSistema() {
         }
     }
 
+    const Add = () => {
+        if(loading) {
+            return <Button variant="contained" disabled>Cargando...</Button>
+        }
+        return <Button variant="contained" onClick={handleAgregar}>Ingresar</Button>
+    }
+
     const handleAgregar = async () => {
+        setLoading(true)
         if (nombre === "" || tag === "" || plano === "" || descripcion === "" || tipo === "" || especialidad === "" || subsistema === "") {
             setError(true);
             setMensaje("Favor de llenar todos los campos");
-            return;
+            setLoading(false)
         }
         else{
             const data = {
@@ -121,35 +132,31 @@ export default function AgregarSistema() {
                 tag: tag,
                 plano: plano
             }
-            const response = await axios.post('http://localhost:5000/tag', data)
-            console.log(response)
-            if(response && response.data.affectedRows === 1) {
-                console.log('Agregada el tag')
-                console.log(tareas.length)
+            try{
+                const response = await axios.post('http://localhost:5000/tag', data,  {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
                 setAgregado(true)
                 for(let i = 0; i < tareas.length; i++){
                     if(tareas[i].idtipo === tipo){
-                        console.log("Agregando tarea")
                         const data1 = {
                             idtag: response.data.insertId,
                             idtarea: tareas[i].id
                         }
-                        const addRegistro = await axios.post('http://localhost:5000/registro', data1)
-                        if(addRegistro && addRegistro.data.affectedRows === 1){
-                            console.log('Agregada la tarea al registro')
-                            setAgregado(true)
-                        }else{
-                            console.log('Error')
-                            setError(true)
-                            setMensaje("Error al agregar la tarea al registro")
+
+                        try{
+                            await axios.post('http://localhost:5000/registro', data1,  {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
                         }
-                    }
+                        catch (error) {
+                            setError(true)
+                            setMensaje("Error al agregar el registro, favor de recargar la pagina")
+                        }
+                    }    
                 }
-            } else {
-                console.log('Error')
-                setError(true)
-                setMensaje("Error al agregar el tag")
             }
+            catch (error) {
+                setError(true)
+                setMensaje("Error al agregar el tag, favor de recargar la pagina")
+            }
+            setLoading(false)
         }
     }
 
@@ -254,7 +261,7 @@ export default function AgregarSistema() {
             <br />
 
             <div style={{display: 'flex', justifyContent: 'center'}}>
-                <Button variant="contained" onClick={handleAgregar}>Agregar</Button>
+                <Add />
             </div>
         </Box>
     );

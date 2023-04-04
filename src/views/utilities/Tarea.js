@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
 import { grey } from '@mui/material/colors';
 import axios from 'axios';
+import { useContextState } from '../../Context';
 
 export default function Tarea() {
   const columns = [
@@ -23,6 +24,7 @@ export default function Tarea() {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const {contextState} = useContextState();
 
   useEffect(() => {
     getData();
@@ -31,7 +33,7 @@ export default function Tarea() {
   const getData = async () => {
     setLoading(true)
     try{
-      const response = await axios.get('http://localhost:5000/tarea')
+      const response = await axios.get('http://localhost:5000/tarea',  {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
       setLoading(false)
       setData(response.data);
     }

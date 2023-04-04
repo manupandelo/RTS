@@ -76,7 +76,7 @@ const MainLayout = () => {
         dispatch({ type: SET_MENU, opened: !leftDrawerOpened });
     };
 
-    const {contextState, setContextState} = useContextState();
+    const {contextState} = useContextState();
 
     useEffect(() => {
         dispatch({ type: SET_MENU, opened: !matchDownMd });

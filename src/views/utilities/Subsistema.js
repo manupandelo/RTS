@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
 import { grey } from '@mui/material/colors';
 import axios from 'axios';
+import { useContextState } from '../../Context';
 
 export default function Subsistema() {
   const columns = [
@@ -24,6 +25,7 @@ export default function Subsistema() {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const {contextState} = useContextState();
 
   useEffect(() => {
     getData();
@@ -32,7 +34,7 @@ export default function Subsistema() {
   const getData = async () => {
     setLoading(true)
     try{
-      const response = await axios.get('http://localhost:5000/subsistema')
+      const response = await axios.get('http://localhost:5000/subsistema', {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
       setLoading(false)
       setData(response.data);
     }

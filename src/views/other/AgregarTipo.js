@@ -2,12 +2,15 @@ import React, {useState} from "react";
 import axios from "axios";
 import { Button, TextField, Alert, IconButton, Box } from "@mui/material";
 import { Close } from '@mui/icons-material';
+import { useContextState } from "../../Context";
 
 export default function AgregarTipo() {
     const [nombre, setNombre] = useState("");
     const [error, setError] = useState(false);
     const [mensaje, setMensaje] = useState("");
     const [agregado, setAgregado] = useState(false);
+    const {contextState} = useContextState();
+    const [loading, setLoading] = useState(false);
 
     const Error = () => {
         if (error) {
@@ -49,27 +52,35 @@ export default function AgregarTipo() {
         }
     }
 
+    const Add = () => {
+        if(loading) {
+            return <Button variant="contained" disabled>Cargando...</Button>
+        }
+        return <Button variant="contained" onClick={handleAgregar}>Ingresar</Button>
+    }
+
     const handleAgregar = async () => {
+        setLoading(true)
         if (nombre === "") {
             setError(true);
             setMensaje("El campo nombre no puede estar vacio");
-            return;
+            setLoading(false)
         }
         else{
             const data = {
                 nombre: nombre
             }
-            const response = await axios.post('http://localhost:5000/tipo', data)
-            console.log(response)
-            if(response && response.data.affectedRows === 1) {
-                console.log('Agregado')
+            try{
+                await axios.post('http://localhost:5000/tipo', data,  {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
                 setAgregado(true)
-            } else {
-                console.log('Error')
+            }
+            catch(error) {
+                console.log(error)
                 setError(true)
                 setMensaje("Error al agregar el tipo")
             }
-        }
+            setLoading(false)
+        }   
     }
 
 
@@ -93,7 +104,7 @@ export default function AgregarTipo() {
             </div><br />
 
             <div style={{display: 'flex', justifyContent: 'center'}}>
-                <Button variant="contained" onClick={handleAgregar}>Agregar</Button>
+                <Add />
             </div>
         </Box>
     );

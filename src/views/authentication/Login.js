@@ -34,7 +34,6 @@ import { useContextState, ActionTypes } from '../../Context';
             else{
                 setLoading(false);
                 setContextState({type: ActionTypes.SetUser, value: response.data});
-                axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
             }
         } 
         catch (error) {

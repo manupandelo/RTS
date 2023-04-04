@@ -4,6 +4,7 @@ import { Button, TextField, Alert, IconButton, Box, Autocomplete } from "@mui/ma
 import { Close } from '@mui/icons-material';
 import { DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { useContextState } from "../../Context";
 
 export default function AgregarSistema() {
     const [nombre, setNombre] = useState("");
@@ -14,23 +15,26 @@ export default function AgregarSistema() {
 
 
     const [options, setOptions] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const [error, setError] = useState(false);
     const [mensaje, setMensaje] = useState("");
     const [agregado, setAgregado] = useState(false);
+
+    const {contextState} = useContextState();
 
     useEffect(() => {
         getSistemas();
     }, []);
 
     const getSistemas = async () => {
-        const response = await axios.get('http://localhost:5000/sistema')
-        if(response && response.data) {
+        try{
+            await axios.get('http://localhost:5000/sistema', {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
             setOptions(response.data)
-        }else {
-            console.log('Error')
-            setMensaje("Error al obtener los Sistemas")
+        }
+        catch (error) {
             setError(true)
+            setMensaje("Error al obtener los sistemas, favor de recargar la pagina")
         }
     }
 
@@ -74,10 +78,19 @@ export default function AgregarSistema() {
         }
     }
 
+    const Add = () => {
+        if(loading) {
+            return <Button variant="contained" disabled>Cargando...</Button>
+        }
+        return <Button variant="contained" onClick={handleAgregar}>Ingresar</Button>
+    }
+
     const handleAgregar = async () => {
+        setLoading(true)
         if (nombre === "" || numero === "" || sistema === "" || fechafinal === "" || fechainicio === "") {
             setError(true);
             setMensaje("Favor de llenar todos los campos");
+            setLoading(false)
             return;
         }
         else{
@@ -88,16 +101,14 @@ export default function AgregarSistema() {
                 fechafinal: fechafinal,
                 fechainicio: fechainicio
             }
-            const response = await axios.post('http://localhost:5000/subsistema', data)
-            console.log(response)
-            if(response && response.data.affectedRows === 1) {
-                console.log('Agregado')
+            try{
+                await axios.post('http://localhost:5000/subsistema', data, {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
                 setAgregado(true)
-            } else {
-                console.log('Error')
+            }catch(error) {
                 setError(true)
-                setMensaje("Error al agregar el subsistema")
+                setMensaje("Error al agregar el subsistema, favor de intentar de nuevo")
             }
+            setLoading(false)
         }
     }
 
@@ -174,7 +185,7 @@ export default function AgregarSistema() {
             </div><br/>
             
             <div style={{display: 'flex', justifyContent: 'center'}}>
-                <Button variant="contained" onClick={handleAgregar}>Agregar</Button>
+                <Add />
             </div>
         </Box>
     );

@@ -17,29 +17,29 @@ export default function AgregarSistema() {
     const [error, setError] = useState(false);
     const [mensaje, setMensaje] = useState("");
     const [agregado, setAgregado] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         get();
-
     }, []);
 
     const get = async () => {
-        const response = await axios.get('http://localhost:5000/tipo')
-        if(response && response.data) {
+        try{
+            const response = await axios.get('http://localhost:5000/tipo', {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
             setOptions(response.data)
-        }else {
-            console.log('Error')
-            setMensaje("Error al obtener los tipos")
+        }
+        catch (error) {
             setError(true)
+            setMensaje("Error al obtener los tipos, favor de recargar la pagina")
         }
 
-        const response1 = await axios.get('http://localhost:5000/especialidad')
-        if(response1 && response1.data) {
-            setOptions1(response1.data)  
-        }else {
-            console.log('Error')
-            setMensaje("Error al obtener las especialidades")
+        try{
+            const response1 = await axios.get('http://localhost:5000/especialidad', {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+            setOptions1(response1.data)
+        }
+        catch (error) {
             setError(true)
+            setMensaje("Error al obtener las especialidades, favor de recargar la pagina")
         }
     }
 
@@ -83,11 +83,20 @@ export default function AgregarSistema() {
         }
     }
 
+    const Add = () => {
+        if(loading) {
+            return <Button variant="contained" disabled>Cargando...</Button>
+        }
+        return <Button variant="contained" onClick={handleAgregar}>Ingresar</Button>
+    }
+
+
     const handleAgregar = async () => {
+        setLoading(true)
         if (nombre === "" || ubicacion === "" || codigo === "" || tipo === "" || especialidad === "") {
             setError(true);
             setMensaje("Favor de llenar todos los campos");
-            return;
+            setLoading(false)
         }
         else{
             const data = {
@@ -97,16 +106,15 @@ export default function AgregarSistema() {
                 idtipo: tipo,
                 idespecialidad: especialidad
             }
-            const response = await axios.post('http://localhost:5000/tarea', data)
-            console.log(response)
-            if(response && response.data.affectedRows === 1) {
-                console.log('Agregado')
+            try{
+                await axios.post('http://localhost:5000/tarea', data,  {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
                 setAgregado(true)
-            } else {
-                console.log('Error')
+            }
+            catch (error) {
                 setError(true)
                 setMensaje("Error al agregar la tarea")
             }
+            setLoading(false)
         }
     }
 
@@ -179,7 +187,7 @@ export default function AgregarSistema() {
             </div><br/>
 
             <div style={{display: 'flex', justifyContent: 'center'}}>
-                <Button variant="contained" onClick={handleAgregar}>Agregar</Button>
+                <Add />
             </div>
         </Box>
     );

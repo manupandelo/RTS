@@ -31,7 +31,7 @@ export default function Sistema() {
   const getData = async () => {
     setLoading(true)
     try{
-      const response = await axios.get('http://localhost:5000/sistema', {headers: {'Authorization': `Bearer ${contextState.token}`}})
+      const response = await axios.get('http://localhost:5000/sistema', {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
       console.log(response.data)
       setLoading(false)
       setData(response.data);
