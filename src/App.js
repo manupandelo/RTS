@@ -4,13 +4,14 @@ import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, StyledEngineProvider } from '@mui/material';
 
 // routing
-import ThemeRoutes from './routes/index';
+import Routes from './routes/index';
 
 // defaultTheme
 import themes from './themes/index';
 
 // project imports
 import NavigationScroll from './layout/NavigationScroll';
+import { ContextProvider } from './Context';
 
 // ==============================|| APP ||============================== //
 
@@ -18,14 +19,17 @@ const App = () => {
     const customization = useSelector((state) => state.customization);
 
     return (
-        <StyledEngineProvider injectFirst>
-            <ThemeProvider theme={themes(customization)}>
-                <CssBaseline />
-                <NavigationScroll>
-                    <ThemeRoutes />
-                </NavigationScroll>
-            </ThemeProvider>
-        </StyledEngineProvider>
+        <ContextProvider>
+            <StyledEngineProvider injectFirst>
+                <ThemeProvider theme={themes(customization)}>
+                    <CssBaseline />
+                    <NavigationScroll>
+                        <Routes />
+                    </NavigationScroll>
+                </ThemeProvider>
+            </StyledEngineProvider>
+        </ContextProvider>
+        
     );
 };
 

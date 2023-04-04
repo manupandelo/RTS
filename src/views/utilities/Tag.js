@@ -6,7 +6,6 @@ import '../../ui-component/progressBar/style.scss';
 import { grey } from "@mui/material/colors";
 import { Button, Dialog, DialogContent, DialogTitle, DialogActions } from '@mui/material';
 
-
 const ProgressBar = (props) => {
   return( 
       <div className="progressbar-container">
@@ -35,6 +34,10 @@ function ModalTareas(props) {
     setOpen(false);
   };
 
+  const handleSave = () => {
+    setOpen(false);
+  };
+
   return (
     <div>
       <br />
@@ -47,7 +50,7 @@ function ModalTareas(props) {
             <DataGrid columns={columns} rows={props.props} />
           </DialogContent>  
           <DialogActions>
-            <Button onClick={handleClose}>Guardar Cambios</Button>
+            <Button onClick={handleSave}>Guardar Cambios</Button>
             <Button onClick={handleClose}>Cerrar</Button>
         </DialogActions>
       </Dialog>
@@ -86,9 +89,13 @@ export default function Tag() {
 
   const getData = async () => {
     setLoading(true)
-    const response = await axios.get('http://localhost:5000/tag')
-    setLoading(false)
-    setData(response.data);
+    try {  
+      const response = await axios.get('http://localhost:5000/tag')
+      setLoading(false)
+      setData(response.data);
+    } catch (error) {
+      setLoading(false)
+    }
   };
 
     return(

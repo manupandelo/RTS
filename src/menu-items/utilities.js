@@ -48,14 +48,6 @@ const centrocontrol = {
             icon: icons.IconListDetails,
             url: '/tarea',
             breadcrumbs: false
-        },
-        {
-            id: 'registro',
-            title: 'Registro',
-            type: 'item',
-            icon: icons.IconCheckupList,
-            url: '/registro',
-            breadcrumbs: false
         }
     ]
 };

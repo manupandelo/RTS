@@ -103,7 +103,7 @@ export default function AgregarSistema() {
         >
             <Agregado />
             <Error />
-            <h1>Agregar Proyecto</h1> <br></br>
+            <h1>Agregar Sistema</h1> <br></br>
             
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <TextField
