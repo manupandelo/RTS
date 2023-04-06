@@ -72,7 +72,7 @@ export default function AgregarProyecto() {
                 nombre: nombre
             }
             try{
-                await axios.post('http://localhost:5000/proyecto', data, {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+                await axios.post('http://localhost:5000/proyecto', data, {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
                 setAgregado(true)
             }catch(error){
                 setError(true);

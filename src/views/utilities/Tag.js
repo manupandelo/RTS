@@ -83,7 +83,7 @@ export default function Tag() {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const contextState = useContextState();
+  const {contextState} = useContextState();
 
   useEffect(() => {
     getData();
@@ -92,9 +92,9 @@ export default function Tag() {
   const getData = async () => {
     setLoading(true)
     try {  
-      const response = await axios.get('http://localhost:5000/tag', {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
-      setLoading(false)
+      const response = await axios.get('http://localhost:5000/tag', {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
       setData(response.data);
+      setLoading(false)
     } catch (error) {
       setLoading(false)
     }

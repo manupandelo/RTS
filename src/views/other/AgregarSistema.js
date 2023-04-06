@@ -25,7 +25,7 @@ export default function AgregarSistema() {
 
     const getProyectos = async () => {
         try{
-            const response = await axios.get('http://localhost:5000/proyecto', {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+            const response = await axios.get('http://localhost:5000/proyecto', {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
             setOptions(response.data)
         } catch (error) {
             setError(true)
@@ -94,7 +94,7 @@ export default function AgregarSistema() {
                 idproyecto: proyecto
             }
             try{
-                await axios.post('http://localhost:5000/sistema', data, {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+                await axios.post('http://localhost:5000/sistema', data, {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
                 setAgregado(true)
             }  catch (error) {
                 setError(true)

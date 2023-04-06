@@ -33,7 +33,7 @@ export default function Tarea() {
   const getData = async () => {
     setLoading(true)
     try{
-      const response = await axios.get('http://localhost:5000/tarea',  {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+      const response = await axios.get('http://localhost:5000/tarea',  {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
       setLoading(false)
       setData(response.data);
     }

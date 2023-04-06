@@ -71,11 +71,10 @@ export default function AgregarTipo() {
                 nombre: nombre
             }
             try{
-                await axios.post('http://localhost:5000/tipo', data,  {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+                await axios.post('http://localhost:5000/tipo', data,  {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
                 setAgregado(true)
             }
             catch(error) {
-                console.log(error)
                 setError(true)
                 setMensaje("Error al agregar el tipo")
             }

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Box, TextField, Button} from '@mui/material';
 import React, { useState } from 'react';
 import { useContextState, ActionTypes } from '../../Context';
+import { useEffect } from 'react';
 
  export default function Login() {
     const [user, setUSer] = useState('');
@@ -11,6 +12,9 @@ import { useContextState, ActionTypes } from '../../Context';
     const [loading, setLoading] = useState(false);
     const {setContextState} = useContextState();
 
+    /*useEffect(() => {
+        window.location.href = 'http://localhost:3000/';
+    }, []);*/
 
     const handleLogin = async () => {
         if(!user || !password) {
@@ -25,11 +29,6 @@ import { useContextState, ActionTypes } from '../../Context';
             setError(true);
             setMensaje('Usuario o contraseña incorrectos');
             setLoading(false);
-            }
-            else if(response.error) {
-                setError(true);
-                setMensaje(response.error);
-                setLoading(false);
             }
             else{
                 setLoading(false);

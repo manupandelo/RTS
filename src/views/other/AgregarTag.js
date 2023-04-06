@@ -32,7 +32,7 @@ export default function AgregarSistema() {
 
     const get = async () => {
         try{
-            await axios.get('http://localhost:5000/tipo',  {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+            const response = await axios.get('http://localhost:5000/tipo',  {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
             setOptions(response.data)
         }
         catch (error) {
@@ -41,7 +41,7 @@ export default function AgregarSistema() {
         }
 
         try{
-            await axios.get('http://localhost:5000/especialidad',  {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+            const response = await axios.get('http://localhost:5000/especialidad',  {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
             setOptions1(response.data)
         }
         catch (error) {
@@ -50,7 +50,7 @@ export default function AgregarSistema() {
         }
 
         try{
-            await axios.get('http://localhost:5000/subsistema',  {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+            const response = await axios.get('http://localhost:5000/subsistema',  {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
             setOptions2(response.data)
         }
         catch (error) {
@@ -59,7 +59,7 @@ export default function AgregarSistema() {
         }
 
         try{
-            await axios.get('http://localhost:5000/tarea',  {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+            const response = await axios.get('http://localhost:5000/tarea',  {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
             setTareas(response.data)
         }
         catch (error) {
@@ -133,7 +133,7 @@ export default function AgregarSistema() {
                 plano: plano
             }
             try{
-                const response = await axios.post('http://localhost:5000/tag', data,  {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+                const response = await axios.post('http://localhost:5000/tag', data,  {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
                 setAgregado(true)
                 for(let i = 0; i < tareas.length; i++){
                     if(tareas[i].idtipo === tipo){
@@ -143,7 +143,7 @@ export default function AgregarSistema() {
                         }
 
                         try{
-                            await axios.post('http://localhost:5000/registro', data1,  {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+                            await axios.post('http://localhost:5000/registro', data1,  {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
                         }
                         catch (error) {
                             setError(true)

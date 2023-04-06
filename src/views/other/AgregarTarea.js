@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import { Button, TextField, Alert, IconButton, Box, Autocomplete } from "@mui/material";
 import { Close } from '@mui/icons-material';
+import { useContextState } from "../../Context";
 
 export default function AgregarSistema() {
     const [nombre, setNombre] = useState("");
@@ -19,13 +20,15 @@ export default function AgregarSistema() {
     const [agregado, setAgregado] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const {contextState} = useContextState();
+
     useEffect(() => {
         get();
     }, []);
 
     const get = async () => {
         try{
-            const response = await axios.get('http://localhost:5000/tipo', {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+            const response = await axios.get('http://localhost:5000/tipo', {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
             setOptions(response.data)
         }
         catch (error) {
@@ -34,7 +37,7 @@ export default function AgregarSistema() {
         }
 
         try{
-            const response1 = await axios.get('http://localhost:5000/especialidad', {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+            const response1 = await axios.get('http://localhost:5000/especialidad', {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
             setOptions1(response1.data)
         }
         catch (error) {
@@ -107,7 +110,7 @@ export default function AgregarSistema() {
                 idespecialidad: especialidad
             }
             try{
-                await axios.post('http://localhost:5000/tarea', data,  {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+                await axios.post('http://localhost:5000/tarea', data,  {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
                 setAgregado(true)
             }
             catch (error) {

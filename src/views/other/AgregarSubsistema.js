@@ -29,7 +29,7 @@ export default function AgregarSistema() {
 
     const getSistemas = async () => {
         try{
-            await axios.get('http://localhost:5000/sistema', {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+            const response = await axios.get('http://localhost:5000/sistema', {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
             setOptions(response.data)
         }
         catch (error) {
@@ -102,7 +102,7 @@ export default function AgregarSistema() {
                 fechainicio: fechainicio
             }
             try{
-                await axios.post('http://localhost:5000/subsistema', data, {headers: {Authorization: `Bearer ${contextState.user[0][0].token}`}})
+                await axios.post('http://localhost:5000/subsistema', data, {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
                 setAgregado(true)
             }catch(error) {
                 setError(true)
