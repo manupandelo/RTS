@@ -1,17 +1,33 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import axios from "axios";
-import { Button, TextField, Alert, IconButton, Box } from "@mui/material";
+import { Button, TextField, Alert, IconButton, Box, Autocomplete } from "@mui/material";
 import { Close } from '@mui/icons-material';
-import { useContextState } from "../../Context";
 
 export default function AgregarEspecialidad() {
     const [nombre, setNombre] = useState("");
+    const [proyecto, setProyecto] = useState();
+
+    const [options, setOptions] = useState([]);
+
     const [error, setError] = useState(false);
     const [mensaje, setMensaje] = useState("");
     const [agregado, setAgregado] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const {contextState} = useContextState();
+
+    useEffect(() => {
+        getProyectos();
+    }, []);
+    
+        const getProyectos = async () => {
+            try{
+                const response = await axios.get('https://rts-back.onrender.com/idproyectos', /*{headers: {Authorization: `Bearer ${contextState.user[0].token}`}}*/)
+                setOptions(response.data)
+            } catch (error) {
+                setError(true)
+                setMensaje("Error al obtener los proyectos, favor de recargar la pagina")
+            }
+        }
 
     const Error = () => {
         if (error) {
@@ -62,17 +78,18 @@ export default function AgregarEspecialidad() {
 
     const handleAgregar = async () => {
         setLoading(true)
-        if (nombre === "") {
+        if (nombre === "" || proyecto === "") {
             setError(true);
             setMensaje("El campo nombre no puede estar vacio");
             setLoading(false)
         }
         else{
             const data = {
-                nombre: nombre
+                nombre: nombre,
+                idProyecto: proyecto
             }
             try{
-                await axios.post('http://localhost:5000/especialidad', data, {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
+                await axios.post('https://rts-back.onrender.com/especialidad', data, /*{headers: {Authorization: `Bearer ${localStorage.getItem('usuario').token}`}}*/)
                 setAgregado(true)
             } catch (error) {
                 setError(true)
@@ -101,6 +118,20 @@ export default function AgregarEspecialidad() {
                     onChange={(e) => setNombre(e.target.value)}
                 />
             </div><br />
+
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <Autocomplete
+                    options={options}
+                    getOptionLabel={(option) => option.nombre}
+                    onChange={(event, option) => {
+                        setProyecto(option.id);
+                    }}
+                    style={{ width: 300 }}
+                    renderInput={(params) => (
+                    <TextField {...params} label="Proyecto" variant="outlined" />
+                    )}
+                />
+            </div><br/>
 
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <Add />

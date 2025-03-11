@@ -46,13 +46,6 @@ const other = {
                     breadcrumbs: false
                 },
                 {
-                    id: 'agregartarea',
-                    title: 'Tarea',
-                    type: 'item',
-                    url: '/agregar/tarea',
-                    breadcrumbs: false
-                },
-                {
                     id: 'agregarespecialidad',
                     title: 'Especialidad',
                     type: 'item',
@@ -64,6 +57,13 @@ const other = {
                     title: 'Tipo',
                     type: 'item',
                     url: '/agregar/tipo',
+                    breadcrumbs: false
+                },
+                {
+                    id: 'agregartarea',
+                    title: 'Tarea',
+                    type: 'item',
+                    url: '/agregar/tarea',
                     breadcrumbs: false
                 }
             ]

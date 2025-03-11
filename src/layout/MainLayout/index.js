@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
-import { useContextState } from '../../Context';
+import { useState } from 'react';
 
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
@@ -76,17 +76,30 @@ const MainLayout = () => {
         dispatch({ type: SET_MENU, opened: !leftDrawerOpened });
     };
 
-    const {contextState} = useContextState();
+    const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('usuario'));
 
     useEffect(() => {
         dispatch({ type: SET_MENU, opened: !matchDownMd });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [matchDownMd]);
 
-    if(contextState.user.length === 0){
+    useEffect(() => {
+        const handleStorageChange = () => {
+            setIsAuthenticated(!!localStorage.getItem('usuario'));
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+        window.addEventListener('userAuthenticated', handleStorageChange);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('userAuthenticated', handleStorageChange);
+        };
+    }, []);
+
+    if(!isAuthenticated){
         return <Login/>
-    }
-    else{
+    }else{
         return (
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />

@@ -9,8 +9,6 @@ export default function Sistema() {
   const columns = [
     {field: 'id', hide: true},
     {field: 'nombre', headerName: 'Nombre', width: 200},
-    {field: 'proyecto', headerName: 'Proyecto', width: 200},
-    {field: 'numSistema', headerName: 'Sistema', width: 200}
   ]
 
   const getRowSpacing = React.useCallback((params) => {
@@ -22,6 +20,7 @@ export default function Sistema() {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const {contextState} = useContextState();
 
   useEffect(() => {   
       getData();
@@ -30,7 +29,7 @@ export default function Sistema() {
   const getData = async () => {
     setLoading(true)
     try{
-      const response = await axios.get('https://rts-back.onrender.com/sistema'/*, {headers: {Authorization: `Bearer ${contextState.user[0].token}`}}*/)
+      const response = await axios.get('https://rts-back.onrender.com/proyecto'/*, {headers: {Authorization: `Bearer ${localStorage.}`}}*/)
       setLoading(false)
       setData(response.data);
     }

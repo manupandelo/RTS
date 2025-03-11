@@ -6,6 +6,7 @@ import MainLayout from '../layout/MainLayout/index';
 import Loadable from '../ui-component/Loadable';
 
 // utilities routing
+const Proyecto = Loadable(lazy(() => import('../views/utilities/Proyecto')));
 const Sistema= Loadable(lazy(() => import('../views/utilities/Sistema')));
 const Subsistema = Loadable(lazy(() => import('../views/utilities/Subsistema')));
 const Tag = Loadable(lazy(() => import('../views/utilities/Tag')));
@@ -14,9 +15,11 @@ const AgregarProyecto = Loadable(lazy(() => import('../views/other/AgregarProyec
 const AgregarSistema = Loadable(lazy(() => import('../views/other/AgregarSistema')));
 const AgregarSubsistema = Loadable(lazy(() => import('../views/other/AgregarSubsistema')));
 const AgregarTag = Loadable(lazy(() => import('../views/other/AgregarTag')));
-const AgregarTarea = Loadable(lazy(() => import('../views/other/AgregarTarea')));
 const AgregarEspecialidad = Loadable(lazy(() => import('../views/other/AgregarEspecialidad')));
 const AgregarTipo = Loadable(lazy(() => import('../views/other/AgregarTipo')));
+const AgregarTarea = Loadable(lazy(() => import('../views/other/AgregarTarea')));
+const TagsPendientes = Loadable(lazy(() => import('../views/utilities/TagsPendientes')));
+const TareasPendientes = Loadable(lazy(() => import('../views/utilities/TareasPendientes')));
 const Home = Loadable(lazy(() => import('../views/other/Home')));
 
 // ==============================|| ROUTING RENDER ||============================== //
@@ -30,6 +33,10 @@ export default function Routes() {
                 {
                     path: '/',
                     element: <Home />
+                },
+                {
+                    path: '/proyecto',
+                    element: <Proyecto />
                 },
                 {
                     path: '/sistema',
@@ -64,16 +71,24 @@ export default function Routes() {
                     element: <AgregarTag />
                 },
                 {
-                    path: '/agregar/tarea',
-                    element: <AgregarTarea />
-                },
-                {
                     path: '/agregar/especialidad',
                     element: <AgregarEspecialidad />
                 },
                 {
                     path: '/agregar/tipo',
                     element: <AgregarTipo />
+                },
+                {
+                    path: '/agregar/tarea',
+                    element: <AgregarTarea/>
+                },
+                {
+                    path: '/tagspendientes',
+                    element: <TagsPendientes />
+                },
+                {
+                    path : '/tareaspendientes',
+                    element: <TareasPendientes />
                 }
             ]
         }

@@ -3,17 +3,16 @@ import { useState, useEffect } from "react";
 import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
 import { grey } from '@mui/material/colors';
 import axios from 'axios';
-import { useContextState } from '../../Context';
 
 export default function Subsistema() {
   const columns = [
     {field: 'id', hide: true},
-    {field: 'numsubsistema', headerName: 'Subsistema', width: 200},
-    {field: 'nombre', headerName: 'Nombre', width: 300},
-    {field: 'fechainicio', headerName: 'Fecha Inicio', width: 200},
-    {field: 'fechafinal', headerName: 'Fecha Final', width: 200},
-    {field: 'nombresistema', headerName: 'Nombre Sistema', width: 200},
-    {field: 'numsistema', headerName: 'Sistema', width: 200}
+    {field: 'numSubSistema', headerName: 'Subsistema', width: 200},
+    {field: 'nombre', headerName: 'Nombre', width: 150},
+    {field: 'fechainicio', headerName: 'Fecha Inicio', width: 110},
+    {field: 'fechafinal', headerName: 'Fecha Final', width: 110},
+    {field: 'nombreSistema', headerName: 'Nombre Sistema', width: 200},
+    {field: 'numSistema', headerName: 'Sistema', width: 100}
   ]
 
   const getRowSpacing = React.useCallback((params) => {
@@ -25,7 +24,6 @@ export default function Subsistema() {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const {contextState} = useContextState();
 
   useEffect(() => {
     getData();
@@ -34,8 +32,9 @@ export default function Subsistema() {
   const getData = async () => {
     setLoading(true)
     try{
-      const response = await axios.get('http://localhost:5000/subsistema', {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
+      const response = await axios.get('https://rts-back.onrender.com/subsistema', /*{headers: {Authorization: `Bearer ${localStorage}}}}*/)
       setLoading(false)
+      console.log(response.data)
       setData(response.data);
     }
     catch (error) {

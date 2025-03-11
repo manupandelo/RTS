@@ -1,16 +1,14 @@
 import axios from 'axios';
 import { Box, TextField, Button} from '@mui/material';
 import React, { useState } from 'react';
-import { useContextState, ActionTypes } from '../../Context';
-import { useEffect } from 'react';
+import { ActionTypes } from '../../Context';
 
  export default function Login() {
-    const [user, setUSer] = useState('');
+    const [user, setUSer] = useState(null);
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const [mensaje, setMensaje] = useState('');
     const [loading, setLoading] = useState(false);
-    const {setContextState} = useContextState();
 
     /*useEffect(() => {
         window.location.href = 'http://localhost:3000/';
@@ -24,15 +22,18 @@ import { useEffect } from 'react';
         }
         setLoading(true);
         try{
-           const response = await axios.post('http://localhost:5000/login', {user, password })
+           const response = await axios.post('https://rts-back.onrender.com/login', {user, password})
+           console.log(response);
             if(response.data === false)  {
-            setError(true);
-            setMensaje('Usuario o contraseña incorrectos');
-            setLoading(false);
+                setError(true);
+                setMensaje('Usuario o contraseña incorrectos');
+                setLoading(false);
             }
             else{
                 setLoading(false);
-                setContextState({type: ActionTypes.SetUser, value: response.data});
+                localStorage.setItem('usuario', {type: ActionTypes.SetUser, value: response.data});
+                const event = new Event('userAuthenticated');
+                window.dispatchEvent(event);
             }
         } 
         catch (error) {

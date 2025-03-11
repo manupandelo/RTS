@@ -2,7 +2,6 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import { Button, TextField, Alert, IconButton, Box, Autocomplete } from "@mui/material";
 import { Close } from '@mui/icons-material';
-import { useContextState } from "../../Context";
 
 export default function AgregarSistema() {
     const [nombre, setNombre] = useState("");
@@ -17,15 +16,13 @@ export default function AgregarSistema() {
     const [agregado, setAgregado] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const {contextState} = useContextState();
-
     useEffect(() => {
         getProyectos();
     }, []);
 
     const getProyectos = async () => {
         try{
-            const response = await axios.get('http://localhost:5000/proyecto', {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
+            const response = await axios.get('https://rts-back.onrender.com/idproyectos', /*{headers: {Authorization: `Bearer ${contextState.user[0].token}`}}*/)
             setOptions(response.data)
         } catch (error) {
             setError(true)
@@ -90,11 +87,11 @@ export default function AgregarSistema() {
         else{
             const data = {
                 nombre: nombre,
-                idsistema: numero,
-                idproyecto: proyecto
+                numSistema: numero,
+                idProyecto: proyecto
             }
             try{
-                await axios.post('http://localhost:5000/sistema', data, {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
+                await axios.post('https://rts-back.onrender.com/sistema', data/*, {headers: {Authorization: `Bearer ${contextState.user[0].token}`}}*/)
                 setAgregado(true)
             }  catch (error) {
                 setError(true)
@@ -138,8 +135,8 @@ export default function AgregarSistema() {
                 <Autocomplete
                     options={options}
                     getOptionLabel={(option) => option.nombre}
-                    onChange={(event, newValue) => {
-                        setProyecto(newValue.idproyecto);
+                    onChange={(event, option) => {
+                        setProyecto(option.id);
                     }}
                     style={{ width: 300 }}
                     renderInput={(params) => (

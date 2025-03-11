@@ -1,10 +1,12 @@
-import React, {useState, useEffect} from "react";
+import {useState, useEffect} from "react";
 import axios from "axios";
 import { Button, TextField, Alert, IconButton, Box, Autocomplete } from "@mui/material";
 import { Close } from '@mui/icons-material';
 import { DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { useContextState } from "../../Context";
+import React from "react";
+import dayjs from "dayjs";
+
 
 export default function AgregarSistema() {
     const [nombre, setNombre] = useState("");
@@ -21,15 +23,13 @@ export default function AgregarSistema() {
     const [mensaje, setMensaje] = useState("");
     const [agregado, setAgregado] = useState(false);
 
-    const {contextState} = useContextState();
-
     useEffect(() => {
         getSistemas();
     }, []);
 
     const getSistemas = async () => {
         try{
-            const response = await axios.get('http://localhost:5000/sistema', {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
+            const response = await axios.get('https://rts-back.onrender.com/idsistemas', /*{headers: {Authorization: `Bearer ${contextState.user[0].token}`}}*/)
             setOptions(response.data)
         }
         catch (error) {
@@ -97,12 +97,12 @@ export default function AgregarSistema() {
             const data = {
                 nombre: nombre,
                 numsubsistema: numero,
-                idsistema: sistema,
+                idSistema: sistema,
                 fechafinal: fechafinal,
                 fechainicio: fechainicio
             }
             try{
-                await axios.post('http://localhost:5000/subsistema', data, {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
+                await axios.post('https://rts-back.onrender.com/subsistema', data/*, {headers: {Authorization: `Bearer ${contextState.user[0].token}`}}*/)
                 setAgregado(true)
             }catch(error) {
                 setError(true)
@@ -146,8 +146,8 @@ export default function AgregarSistema() {
                 <Autocomplete
                     options={options}
                     getOptionLabel={(option) => option.nombre}
-                    onChange={(event, newValue) => {
-                        setSistema(newValue.idsistema);
+                    onChange={(event, option) => {
+                        setSistema(option.id);
                     }}
                     style={{ width: 300 }}
                     renderInput={(params) => (
@@ -160,10 +160,15 @@ export default function AgregarSistema() {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                         label="Fecha Inicio"
+                        slotProps={{
+                            textField: {
+                              helperText: 'MM/DD/YYYY',
+                            },
+                        }}
                         value={fechainicio}
                         onChange={(newValue) => {
-                        setFechainicio(newValue);
-                        console.log(fechainicio);
+                        const date = dayjs(newValue).format('YYYY-MM-DD'); 
+                        setFechainicio(date);
                         }}
                         renderInput={(params) => <TextField {...params} />}
                     />
@@ -174,10 +179,15 @@ export default function AgregarSistema() {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                         label="Fecha Final"
+                        slotProps={{
+                            textField: {
+                              helperText: 'MM/DD/YYYY',
+                            },
+                        }}
                         value={fechafinal}
                         onChange={(newValue) => {
-                        setFechafinal(newValue);
-                        console.log(fechafinal);
+                        const date = dayjs(newValue).format('YYYY-MM-DD'); 
+                        setFechafinal(date);
                         }}
                         renderInput={(params) => <TextField {...params} />}
                     />

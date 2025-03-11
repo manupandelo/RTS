@@ -20,38 +20,10 @@ const ProgressBar = (props) => {
 function ModalTareas(props) {
   const [open, setOpen] = useState(false);
 
-
   const columns = [
     {field: 'id', headerName:'Id', hide: true},
     {field: 'nombreTarea', headerName: 'Tarea', width: 250},
-    {field: 'done', headerName: 'Realizado', type:'boolean', width: 100, editable:false},
-    {headerName: 'Marcar', field: 'acciones', width: 150, renderCell: (params) => { 
-      const handleCompleteTask = async () => {
-        try {
-          await axios.put(`https://rts-back.onrender.com/realizarTarea`, {id: params.row.id});
-          window.location.reload();
-        } catch (error) {
-          console.error('Error al marcar la tarea como realizada:', error);
-        }
-      };
-
-      const handleUncompleteTask = async () => {
-        try {
-          await axios.put(`https://rts-back.onrender.com/desmarcarTarea`, {id: params.row.id});
-          window.location.reload();
-        } catch (error) {
-          console.error('Error al desmarcar la tarea como realizada:', error);
-        }
-      };
-
-      if(params.row.done === 0){
-        return (
-          <Button variant="contained" color="primary" size='small' onClick={handleCompleteTask}>Realizar</Button>
-        );} else {
-      return (
-        <Button variant="contained" color="secondary" size='small' onClick={handleUncompleteTask}>Desmarcar</Button>
-      );}
-    }}
+    {field: 'done', headerName: 'Realizado', type:'boolean', width: 100, editable: (params) => params.value === 0},
   ]
 
   const handleClickOpen = () => {
@@ -59,6 +31,10 @@ function ModalTareas(props) {
   };
 
   const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSave = () => {
     setOpen(false);
   };
 
@@ -74,6 +50,7 @@ function ModalTareas(props) {
             <DataGrid columns={columns} rows={props.props} />
           </DialogContent>  
           <DialogActions>
+            <Button onClick={handleSave}>Guardar Cambios</Button>
             <Button onClick={handleClose}>Cerrar</Button>
         </DialogActions>
       </Dialog>
@@ -81,7 +58,7 @@ function ModalTareas(props) {
   );
 }
 
-export default function Tag() {
+export default function TagsPendientes() {
   const columns = [
     {field: 'id', headerName:'Id', hide: true},
     {field: 'tag', headerName: 'Tag', width: 250},
@@ -102,6 +79,8 @@ export default function Tag() {
 
 
   const [tags, setTags] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [tagStats, setTagStats] = useState([]);;
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -112,8 +91,10 @@ export default function Tag() {
     setLoading(true)
 
     try {
-      const tagResponse = await axios.get('https://rts-back.onrender.com/tag');
+      const tagResponse = await axios.get('https://rts-back.onrender.com/tagspendientes');
       setTags(tagResponse.data);
+
+      console.log(tagResponse.data);
     } catch (error) {
       console.error('Error obteniendo los datos:', error);
 
@@ -126,4 +107,3 @@ export default function Tag() {
       < DataGrid columns={columns} loading={loading} components={{ Toolbar: GridToolbar }} rows={tags} getRowSpacing={getRowSpacing} sx={{[`& .${gridClasses.row}`]: {bgcolor: (theme) => theme.palette.mode === 'light' ? grey[200] : grey[900]}}}/>
     )
 }
-

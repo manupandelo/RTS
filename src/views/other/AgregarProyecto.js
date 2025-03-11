@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import axios from "axios";
 import { Button, TextField, Alert, IconButton, Box } from "@mui/material";
 import { Close } from '@mui/icons-material';
-import { useContextState } from "../../Context";
 
 export default function AgregarProyecto() {
     const [nombre, setNombre] = useState("");
@@ -10,8 +9,6 @@ export default function AgregarProyecto() {
     const [mensaje, setMensaje] = useState("");
     const [agregado, setAgregado] = useState(false);
     const [loading, setLoading] = useState(false);
-
-    const {contextState} = useContextState();
 
     const Error = () => {
         if (error) {
@@ -72,7 +69,7 @@ export default function AgregarProyecto() {
                 nombre: nombre
             }
             try{
-                await axios.post('http://localhost:5000/proyecto', data, {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
+                await axios.post('https://rts-back.onrender.com/proyecto', data/*, {headers: {Authorization: `Bearer ${contextState.user[0].token}`}}*/)
                 setAgregado(true)
             }catch(error){
                 setError(true);

@@ -1,8 +1,9 @@
 // assets
-import { IconBookmark, IconListDetails, IconSubtask, IconCheckupList, IconDatabase } from '@tabler/icons';
+import { IconBookmark, IconListDetails, IconSubtask, IconCheckupList, IconDatabase, IconFolder } from '@tabler/icons';
 
 // constant
 const icons = {
+    IconFolder,
     IconBookmark,
     IconListDetails,
     IconSubtask,
@@ -17,6 +18,14 @@ const centrocontrol = {
     title: 'Centro de Control',
     type: 'group',
     children: [
+        {
+            id: 'proyecto',
+            title: 'Proyecto',
+            type: 'item',
+            url: '/proyecto',
+            icon: icons.IconFolder,
+            breadcrumbs: false
+        },
         {
             id: 'sistema',
             title: 'Sistema',

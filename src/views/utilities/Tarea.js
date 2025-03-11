@@ -3,16 +3,13 @@ import { useState, useEffect } from "react";
 import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
 import { grey } from '@mui/material/colors';
 import axios from 'axios';
-import { useContextState } from '../../Context';
 
 export default function Tarea() {
   const columns = [
     {field: 'idtarea', hide: true},
-    {field: 'nombre', headerName: 'Nombre', width: 250},
+    {field: 'nombreTarea', headerName: 'Nombre', width: 250},
     {field: 'tipo', headerName: 'Tipo', width: 200},
-    {field: 'especialidad', headerName: 'Especialidad', width: 200},
     {field:'codigo', headerName: 'Código', width: 200},
-    {field: 'ubicacion', headerName: 'Ubicación', width: 200}
   ]
 
   const getRowSpacing = React.useCallback((params) => {
@@ -24,7 +21,6 @@ export default function Tarea() {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const {contextState} = useContextState();
 
   useEffect(() => {
     getData();
@@ -33,11 +29,13 @@ export default function Tarea() {
   const getData = async () => {
     setLoading(true)
     try{
-      const response = await axios.get('http://localhost:5000/tarea',  {headers: {Authorization: `Bearer ${contextState.user[0].token}`}})
+      const response = await axios.get('https://rts-back.onrender.com/tareas',  /*{headers: {Authorization: `Bearer ${contextState.user[0].token}`}}*/)
       setLoading(false)
+      console.log(response.data)
       setData(response.data);
     }
     catch (error) {
+
       setLoading(false)
     }
   };
