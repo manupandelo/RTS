@@ -24,7 +24,34 @@ function ModalTareas(props) {
     {field: 'id', headerName:'Id', hide: true},
     {field: 'nombreTarea', headerName: 'Tarea', width: 250},
     {field: 'done', headerName: 'Realizado', type:'boolean', width: 100, editable: (params) => params.value === 0},
-  ]
+    {headerName: 'Marcar', field: 'acciones', width: 150, renderCell: (params) => { 
+        const handleCompleteTask = async () => {
+          try {
+            await axios.put(`https://rts-back.onrender.com/realizarTarea`, {id: params.row.id});
+            window.location.reload();
+          } catch (error) {
+            console.error('Error al marcar la tarea como realizada:', error);
+          }
+        };
+  
+        const handleUncompleteTask = async () => {
+          try {
+            await axios.put(`https://rts-back.onrender.com/desmarcarTarea`, {id: params.row.id});
+            window.location.reload();
+          } catch (error) {
+            console.error('Error al desmarcar la tarea como realizada:', error);
+          }
+        };
+  
+        if(params.row.done === 0){
+          return (
+            <Button variant="contained" color="primary" size='small' onClick={handleCompleteTask}>Realizar</Button>
+          );} else {
+        return (
+          <Button variant="contained" color="secondary" size='small' onClick={handleUncompleteTask}>Desmarcar</Button>
+        );}
+      }}
+]
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -79,8 +106,6 @@ export default function TagsPendientes() {
 
 
   const [tags, setTags] = useState([]);
-  const [tasks, setTasks] = useState([]);
-  const [tagStats, setTagStats] = useState([]);;
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

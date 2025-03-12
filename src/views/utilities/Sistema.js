@@ -3,14 +3,26 @@ import { useState, useEffect } from "react";
 import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
 import { grey } from '@mui/material/colors';
 import axios from 'axios';
-import { useContextState } from '../../Context';
+import '../../ui-component/progressBar/style.scss';
+
+const ProgressBar = (props) => {
+  return( 
+      <div className="progressbar-container">
+          <div className="progressbar-complete" style={{width: `${props.props.filledQuantity}%`}}>
+              <div className="progressbar-liquid"></div>
+          </div>
+          <div className="progress">{props.props.filledQuantity}%</div>
+      </div>
+  )
+}
 
 export default function Sistema() {
   const columns = [
     {field: 'id', hide: true},
     {field: 'nombre', headerName: 'Nombre', width: 200},
     {field: 'proyecto', headerName: 'Proyecto', width: 200},
-    {field: 'numSistema', headerName: 'Sistema', width: 200}
+    {field: 'numSistema', headerName: 'Sistema', width: 200},
+    {field: "filledQuantity", headerName: "Realizado", width: 150, renderCell: (params) => { return <ProgressBar props={params.row} /> } },
   ]
 
   const getRowSpacing = React.useCallback((params) => {

@@ -4,6 +4,7 @@ import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
 import { grey } from '@mui/material/colors';
 import axios from 'axios';
 import { useContextState } from '../../Context';
+import '../../ui-component/progressBar/style.scss';
 
 export default function Sistema() {
   const columns = [
