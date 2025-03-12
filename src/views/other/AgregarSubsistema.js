@@ -87,7 +87,7 @@ export default function AgregarSistema() {
 
     const handleAgregar = async () => {
         setLoading(true)
-        if (nombre === "" || numero === "" || sistema === "" || fechafinal === "" || fechainicio === "") {
+        if (nombre === "" || numero === "" || sistema === "" || fechafinal === "" || fechainicio === "") {   
             setError(true);
             setMensaje("Favor de llenar todos los campos");
             setLoading(false)
@@ -155,6 +155,7 @@ export default function AgregarSistema() {
                     )}
                 />
             </div><br/>
+
 
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>

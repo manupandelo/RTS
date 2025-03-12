@@ -8,6 +8,7 @@ export default function AgregarTarea() {
     const [nombre, setNombre] = useState('');
     const [codigo, setCodigo] = useState('');
     const [tipo, setTipo] = useState('');
+    const [com, setCom] = useState('');
 
     const [error, setError] = useState(false);
     const [mensaje, setMensaje] = useState('');
@@ -88,7 +89,8 @@ export default function AgregarTarea() {
                     const data = {
                         nombreTarea: nombre,
                         codigo: codigo,
-                        idTipo: tipo
+                        idTipo: tipo, 
+                        com: com
                     }
         
                     console.log(data)
@@ -146,7 +148,19 @@ export default function AgregarTarea() {
                 />
             </div><br />
 
-
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <Autocomplete
+                    options={[{ label: 'Comm', value: 1 }, { label: 'PreComm', value: 0 }]}
+                    getOptionLabel={(option) => option.label}
+                    onChange={(event, newValue) => {
+                        setCom(newValue.value);
+                    }}
+                    style={{ width: 300 }}
+                    renderInput={(params) => (
+                    <TextField {...params} label="Com/PreCom" variant="outlined" />
+                    )}
+                />
+            </div><br />
 
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <Add />

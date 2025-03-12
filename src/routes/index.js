@@ -20,6 +20,8 @@ const AgregarTipo = Loadable(lazy(() => import('../views/other/AgregarTipo')));
 const AgregarTarea = Loadable(lazy(() => import('../views/other/AgregarTarea')));
 const TagsPendientes = Loadable(lazy(() => import('../views/utilities/TagsPendientes')));
 const TareasPendientes = Loadable(lazy(() => import('../views/utilities/TareasPendientes')));
+const Especialidad = Loadable(lazy(() => import('../views/utilities/Especialidad')));
+const Avance = Loadable(lazy(() => import('../views/utilities/Avance')));
 const Home = Loadable(lazy(() => import('../views/other/Home')));
 
 // ==============================|| ROUTING RENDER ||============================== //
@@ -89,6 +91,14 @@ export default function Routes() {
                 {
                     path : '/tareaspendientes',
                     element: <TareasPendientes />
+                },
+                {
+                    path: '/especialidad',
+                    element: <Especialidad />
+                },
+                {
+                    path: '/avance',
+                    element: <Avance />
                 }
             ]
         }

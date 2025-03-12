@@ -3,13 +3,13 @@ import { useState, useEffect } from "react";
 import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
 import { grey } from '@mui/material/colors';
 import axios from 'axios';
-import { useContextState } from '../../Context';
 import '../../ui-component/progressBar/style.scss';
 
 export default function Sistema() {
   const columns = [
     {field: 'id', hide: true},
-    {field: 'nombre', headerName: 'Nombre', width: 200},
+    {field: 'nombre', headerName: 'Numero', width: 200},
+    {field: 'nombreProyecto', headerName: 'Nombre', width: 200},
   ]
 
   const getRowSpacing = React.useCallback((params) => {
@@ -21,8 +21,7 @@ export default function Sistema() {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const {contextState} = useContextState();
-
+  
   useEffect(() => {   
       getData();
   }, []);

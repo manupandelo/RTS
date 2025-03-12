@@ -5,6 +5,8 @@ import { Close } from '@mui/icons-material';
 
 export default function AgregarProyecto() {
     const [nombre, setNombre] = useState("");
+    const [numero, setNumero] = useState("");
+
     const [error, setError] = useState(false);
     const [mensaje, setMensaje] = useState("");
     const [agregado, setAgregado] = useState(false);
@@ -59,15 +61,17 @@ export default function AgregarProyecto() {
 
     const handleAgregar = async () => {
         setLoading(true)
-        if (nombre === "") {
+        if (nombre === "" || numero === "") {
             setError(true);
             setMensaje("El campo nombre no puede estar vacio");
             setLoading(false)
         }
         else{
             const data = {
-                nombre: nombre
+                nombre: numero,
+                nombreProyecto: nombre
             }
+            console.log(data)
             try{
                 await axios.post('https://rts-back.onrender.com/proyecto', data/*, {headers: {Authorization: `Bearer ${contextState.user[0].token}`}}*/)
                 setAgregado(true)
@@ -96,6 +100,15 @@ export default function AgregarProyecto() {
                     label="Nombre"
                     variant="outlined"
                     onChange={(e) => setNombre(e.target.value)}
+                />
+            </div><br />
+
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <TextField
+                    id="outlined-basic"
+                    label="Numero"
+                    variant="outlined"
+                    onChange={(e) => setNumero(e.target.value)}
                 />
             </div><br />
 

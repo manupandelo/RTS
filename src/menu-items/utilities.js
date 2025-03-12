@@ -1,5 +1,5 @@
 // assets
-import { IconBookmark, IconListDetails, IconSubtask, IconCheckupList, IconDatabase, IconFolder } from '@tabler/icons';
+import { IconBookmark, IconListDetails, IconSubtask, IconCheckupList, IconDatabase, IconFolder, IconBrandStackoverflow, IconCircleLetterA } from '@tabler/icons';
 
 // constant
 const icons = {
@@ -8,7 +8,9 @@ const icons = {
     IconListDetails,
     IconSubtask,
     IconCheckupList,
-    IconDatabase
+    IconDatabase,
+    IconBrandStackoverflow,
+    IconCircleLetterA
 };
 
 // ==============================|| UTILITIES MENU ITEMS ||============================== //
@@ -57,7 +59,23 @@ const centrocontrol = {
             icon: icons.IconListDetails,
             url: '/tarea',
             breadcrumbs: false
-        }
+        },
+        {
+            id: 'especialidad',
+            title: 'Especialidad',
+            icon: icons.IconBrandStackoverflow,
+            type: 'item',
+            url: '/especialidad',
+            breadcrumbs: false
+        },
+        {
+            id: 'avance',
+            title: 'Avance',
+            icon: icons.IconCircleLetterA,
+            type: 'item',
+            url: '/avance',
+            breadcrumbs: false
+        },
     ]
 };
 

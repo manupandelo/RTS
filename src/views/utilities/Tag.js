@@ -20,11 +20,18 @@ const ProgressBar = (props) => {
 function ModalTareas(props) {
   const [open, setOpen] = useState(false);
 
-
   const columns = [
     {field: 'id', headerName:'Id', hide: true},
-    {field: 'nombreTarea', headerName: 'Tarea', width: 250},
-    {field: 'done', headerName: 'Realizado', type:'boolean', width: 100, editable:false},
+    {field: 'nombreTarea', headerName: 'Tarea', width: 550},
+    {field: 'done', headerName: 'Realizado', width: 100, editable: false, renderCell: (params) => {
+      if (params.value === 1) {
+        return 'Sí';
+      } else if (params.value === 0) {
+        return 'No';
+      } else {
+        return 'N/A';
+      }
+    }},
     {headerName: 'Marcar', field: 'acciones', width: 150, renderCell: (params) => { 
       const handleCompleteTask = async () => {
         try {
@@ -44,13 +51,37 @@ function ModalTareas(props) {
         }
       };
 
-      if(params.row.done === 0){
+      const handleNotApplicableTask = async () => {
+        try {
+          await axios.put(`https://rts-back.onrender.com/noaplica`, {id: params.row.id});
+          window.location.reload();
+        } catch (error) {
+          console.error('Error al marcar la tarea como no aplicable:', error);
+        }
+      };
+
+      if(params.row.done === 1){
         return (
-          <Button variant="contained" color="primary" size='small' onClick={handleCompleteTask}>Realizar</Button>
-        );} else {
-      return (
-        <Button variant="contained" color="secondary" size='small' onClick={handleUncompleteTask}>Desmarcar</Button>
-      );}
+          <>
+            <Button variant="contained" color="secondary" size='small' onClick={handleUncompleteTask}>Desmarcar</Button>
+            <Button variant="contained" color="grey" size='small' onClick={handleNotApplicableTask}>No Aplica</Button>
+          </>
+        );
+      } else if(params.row.done === 0){
+        return (
+          <>
+            <Button variant="contained" color="primary" size='small' onClick={handleCompleteTask}>Realizar</Button>
+            <Button variant="contained" color="grey" size='small' onClick={handleNotApplicableTask}>No Aplica</Button>
+          </>
+        );
+      } else {
+        return (
+          <>
+            <Button variant="contained" color="primary" size='small' onClick={handleCompleteTask}>Realizar</Button>
+            <Button variant="contained" color="grey" size='small' onClick={handleUncompleteTask}>Desmarcar</Button>
+          </>
+        );
+      }
     }}
   ]
 
@@ -68,9 +99,9 @@ function ModalTareas(props) {
       <Button variant="contained" color="error" size='large' onClick={handleClickOpen}>
         Ver Tareas
       </Button>
-      <Dialog onClose={handleClose} open={open}>
+      <Dialog onClose={handleClose} open={open} maxWidth="md" fullWidth>
         <DialogTitle>Tareas</DialogTitle>
-          <DialogContent style={{height:'400px', width:'500px'}}>
+          <DialogContent style={{height:'600px', width:'850px', }}>
             <DataGrid columns={columns} rows={props.props} />
           </DialogContent>  
           <DialogActions>
