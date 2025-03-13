@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
 import { grey } from '@mui/material/colors';
 import axios from 'axios';
-import '../../ui-component/progressBar/style.scss';
+import getRowSpacing from '../functions/getRowSpacing';
 
 export default function Sistema() {
   const columns = [
@@ -11,13 +11,6 @@ export default function Sistema() {
     {field: 'nombre', headerName: 'Numero', width: 200},
     {field: 'nombreProyecto', headerName: 'Nombre', width: 200},
   ]
-
-  const getRowSpacing = React.useCallback((params) => {
-    return {
-      top: params.isFirstVisible ? 0 : 5,
-      bottom: params.isLastVisible ? 0 : 5,
-    };
-  }, []);
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);

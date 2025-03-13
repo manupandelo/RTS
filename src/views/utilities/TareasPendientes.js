@@ -4,6 +4,8 @@ import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
 import { grey } from '@mui/material/colors';
 import axios from 'axios';
 import Button from '@mui/material/Button';
+import getRowSpacing from '../functions/getRowSpacing';
+import getTaskHandlers from '../functions/getTaskHandlers';
 
 export default function TareasPendientes() {
     const [data, setData] = useState([]);
@@ -11,39 +13,26 @@ export default function TareasPendientes() {
 
     const columns =[
         {field: 'id', hide: true},
-        {field: 'nombreTarea', headerName: 'Nombre', width: 250},
-        {field: 'tipo', headerName: 'Tipo', width: 200},
-        {field:'com', headerName: 'COMM/PRECOMM', width: 150, renderCell: (params) => {
+        {field: 'nombreTarea', headerName: 'Nombre', width: 300},
+        {headerName: 'Marcar', field: 'acciones', width: 150, renderCell: (params) => { 
+          return (
+            <>
+              <Button variant="contained" color="primary" size='small' onClick={getTaskHandlers(params).handleCompleteTask}>Realizar</Button>
+              <Button variant="contained" color="grey" size='small' onClick={getTaskHandlers(params).handleNotApplicableTask}>No Aplica</Button>
+            </>
+          )
+      }},
+      {field: 'tag', headerName: 'Tag', width: 100},
+        {field: 'tipo', headerName: 'Tipo', width: 150},
+        {field:'com', headerName: 'COMM/PRECOMM', width: 130, renderCell: (params) => {
           if(params.value === 1){
             return 'Comisionado';
           } else{
             return 'PreComisionado';
           }
         }},
-        {field: 'codigo', headerName: 'Código', width: 200},
-        {field: 'tag', headerName: 'Tag', width: 200},
-        {headerName: 'Marcar', field: 'acciones', width: 150, renderCell: (params) => { 
-            const handleCompleteTask = async () => {
-              try {
-                await axios.put(`https://rts-back.onrender.com/realizarTarea`, {id: params.row.id});
-                window.location.reload();
-              } catch (error) {
-                console.error('Error al marcar la tarea como realizada:', error);
-              }
-            };
-    
-              return (
-                <Button variant="contained" color="primary" size='small' onClick={handleCompleteTask}>Realizar</Button>
-              )
-          }}
+        {field: 'codigo', headerName: 'Código', width: 150},
     ]
-
-    const getRowSpacing = React.useCallback((params) => {
-        return {
-          top: params.isFirstVisible ? 0 : 5,
-          bottom: params.isLastVisible ? 0 : 5,
-        };
-    }, []);
 
     useEffect(() => {
         getData();

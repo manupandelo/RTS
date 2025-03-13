@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
 import { grey } from '@mui/material/colors';
 import axios from 'axios';
+import getRowSpacing from '../functions/getRowSpacing';
 
 export default function Tarea() {
   const columns = [
@@ -18,13 +19,6 @@ export default function Tarea() {
       }
     }}
   ]
-
-  const getRowSpacing = React.useCallback((params) => {
-    return {
-      top: params.isFirstVisible ? 0 : 5,
-      bottom: params.isLastVisible ? 0 : 5,
-    };
-  }, []);
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);

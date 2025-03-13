@@ -2,123 +2,10 @@ import React from 'react';
 import { useState, useEffect } from "react";
 import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
 import axios from 'axios';
-import '../../ui-component/progressBar/style.scss';
 import { grey } from "@mui/material/colors";
-import { Button, Dialog, DialogContent, DialogTitle, DialogActions } from '@mui/material';
-
-const ProgressBar = (props) => {
-  return( 
-      <div className="progressbar-container">
-          <div className="progressbar-complete" style={{width: `${props.props.filledQuantity}%`}}>
-              <div className="progressbar-liquid"></div>
-          </div>
-          <div className="progress">{props.props.filledQuantity}%</div>
-      </div>
-  )
-}
- 
-function ModalTareas(props) {
-  const [open, setOpen] = useState(false);
-
-
-  const columns = [
-    {field: 'id', headerName:'Id', hide: true},
-    {field: 'nombreTarea', headerName: 'Tarea', width: 500},
-    {field:'com', headerName: 'Tipo', width: 150, renderCell: (params) => {
-      if(params.value === 1){
-        return 'Comisionado';
-      } else{
-        return 'PreComisionado';
-      }
-    }},
-    {field: 'done', headerName: 'Realizado', width: 75, editable: false, renderCell: (params) => {
-      if (params.value === 1) {
-        return 'Sí';
-      } else if (params.value === 0) {
-        return 'No';
-      } else {
-        return 'N/A';
-      }
-    }},
-    {headerName: 'Marcar', field: 'acciones', width: 150, renderCell: (params) => { 
-      const handleCompleteTask = async () => {
-        try {
-          await axios.put(`https://rts-back.onrender.com/realizarTarea`, {id: params.row.id});
-          window.location.reload();
-        } catch (error) {
-          console.error('Error al marcar la tarea como realizada:', error);
-        }
-      };
-
-      const handleUncompleteTask = async () => {
-        try {
-          await axios.put(`https://rts-back.onrender.com/desmarcarTarea`, {id: params.row.id});
-          window.location.reload();
-        } catch (error) {
-          console.error('Error al desmarcar la tarea como realizada:', error);
-        }
-      };
-
-      const handleNotApplicableTask = async () => {
-        try {
-          await axios.put(`https://rts-back.onrender.com/noaplica`, {id: params.row.id});
-          window.location.reload();
-        } catch (error) {
-          console.error('Error al marcar la tarea como no aplicable:', error);
-        }
-      };
-
-      if(params.row.done === 1){
-        return (
-          <>
-            <Button variant="contained" color="secondary" size='small' onClick={handleUncompleteTask}>Desmarcar</Button>
-            <Button variant="contained" color="grey" size='small' onClick={handleNotApplicableTask}>No Aplica</Button>
-          </>
-        );
-      } else if(params.row.done === 0){
-        return (
-          <>
-            <Button variant="contained" color="primary" size='small' onClick={handleCompleteTask}>Realizar</Button>
-            <Button variant="contained" color="grey" size='small' onClick={handleNotApplicableTask}>No Aplica</Button>
-          </>
-        );
-      } else {
-        return (
-          <>
-            <Button variant="contained" color="primary" size='small' onClick={handleCompleteTask}>Realizar</Button>
-            <Button variant="contained" color="grey" size='small' onClick={handleUncompleteTask}>Desmarcar</Button>
-          </>
-        );
-      }
-    }}
-  ]
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <div>
-      <br />
-      <Button variant="contained" color="error" size='large' onClick={handleClickOpen}>
-        Ver Tareas
-      </Button>
-      <Dialog onClose={handleClose} open={open} maxWidth="md" fullWidth>
-        <DialogTitle>Tareas</DialogTitle>
-          <DialogContent style={{height:'600px', width:'900px', }}>
-            <DataGrid columns={columns} rows={props.props} />
-          </DialogContent>  
-          <DialogActions>
-            <Button onClick={handleClose}>Cerrar</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-  );
-}
+import ModalTareas from '../functions/ModalTarea';
+import ProgressBar from '../functions/ProgressBar';
+import getRowSpacing from '../functions/getRowSpacing';
 
 export default function Tag() {
   const columns = [
@@ -131,14 +18,6 @@ export default function Tag() {
     {field: 'plano', headerName: 'P&id/Plano', width: 120},
     {field: 'tipo', headerName: 'Tipo', width: 150},
   ]
-
-  const getRowSpacing = React.useCallback((params) => {
-    return {
-      top: params.isFirstVisible ? 0 : 5,
-      bottom: params.isLastVisible ? 0 : 5,
-    };
-  }, []);
-
 
   const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(true);
