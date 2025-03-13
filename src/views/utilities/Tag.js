@@ -20,10 +20,18 @@ const ProgressBar = (props) => {
 function ModalTareas(props) {
   const [open, setOpen] = useState(false);
 
+
   const columns = [
     {field: 'id', headerName:'Id', hide: true},
-    {field: 'nombreTarea', headerName: 'Tarea', width: 550},
-    {field: 'done', headerName: 'Realizado', width: 100, editable: false, renderCell: (params) => {
+    {field: 'nombreTarea', headerName: 'Tarea', width: 500},
+    {field:'com', headerName: 'Tipo', width: 150, renderCell: (params) => {
+      if(params.value === 1){
+        return 'Comisionado';
+      } else{
+        return 'PreComisionado';
+      }
+    }},
+    {field: 'done', headerName: 'Realizado', width: 75, editable: false, renderCell: (params) => {
       if (params.value === 1) {
         return 'Sí';
       } else if (params.value === 0) {
@@ -101,7 +109,7 @@ function ModalTareas(props) {
       </Button>
       <Dialog onClose={handleClose} open={open} maxWidth="md" fullWidth>
         <DialogTitle>Tareas</DialogTitle>
-          <DialogContent style={{height:'600px', width:'850px', }}>
+          <DialogContent style={{height:'600px', width:'900px', }}>
             <DataGrid columns={columns} rows={props.props} />
           </DialogContent>  
           <DialogActions>

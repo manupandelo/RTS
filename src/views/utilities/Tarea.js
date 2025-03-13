@@ -7,9 +7,16 @@ import axios from 'axios';
 export default function Tarea() {
   const columns = [
     {field: 'idtarea', hide: true},
-    {field: 'nombreTarea', headerName: 'Nombre', width: 250},
+    {field: 'nombreTarea', headerName: 'Nombre', width: 350},
     {field: 'tipo', headerName: 'Tipo', width: 200},
     {field:'codigo', headerName: 'Código', width: 200},
+    {field:'com', headerName: 'Tipo', width: 150, renderCell: (params) => {
+      if(params.value === 1){
+        return 'Comisionado';
+      } else{
+        return 'PreComisionado';
+      }
+    }}
   ]
 
   const getRowSpacing = React.useCallback((params) => {

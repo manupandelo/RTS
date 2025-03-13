@@ -13,6 +13,13 @@ export default function TareasPendientes() {
         {field: 'id', hide: true},
         {field: 'nombreTarea', headerName: 'Nombre', width: 250},
         {field: 'tipo', headerName: 'Tipo', width: 200},
+        {field:'com', headerName: 'COMM/PRECOMM', width: 150, renderCell: (params) => {
+          if(params.value === 1){
+            return 'Comisionado';
+          } else{
+            return 'PreComisionado';
+          }
+        }},
         {field: 'codigo', headerName: 'Código', width: 200},
         {field: 'tag', headerName: 'Tag', width: 200},
         {headerName: 'Marcar', field: 'acciones', width: 150, renderCell: (params) => { 
